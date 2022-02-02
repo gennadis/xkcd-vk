@@ -4,4 +4,6 @@ venv
 
 .env
 
+comics/
 *.png
+*.jpg
