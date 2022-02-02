@@ -1,7 +1,6 @@
 # Post random XKCD comics on VK group wall
 
-This project is a simple command line tool for fetching [XKCD comics](https://xkcd.com/)  
-and posting them to your [VK](https://vk.com/) community wall.
+This project is a simple command line tool for fetching [XKCD comics](https://xkcd.com/) and posting them to your [VK](https://vk.com/) community wall.
 
 ## Features
 - Download random XKCD comics image and title
@@ -27,6 +26,11 @@ pip install -r requirements.txt
 ```
 
 4. Rename `.env.example` to `.env` and place your secrets accordingly
+```bash
+VK_CLIENT_ID=0123456789
+VK_TOKEN=place_your_token_here
+VK_GROUP_ID=0123456789
+```
 
 5. Run
 ```bash
