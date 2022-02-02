@@ -1,13 +1,14 @@
 import os
 from typing import Optional, Union
 from urllib.parse import urljoin, unquote, urlsplit
-from click import command
+from dotenv import load_dotenv
 
 
 import requests
 
 
 COMICS_JSON_URL = "https://xkcd.com/{}/info.0.json"
+VK_API_URL = "https://api.vk.com/method"
 
 
 def get_comics_json(comics_id: int) -> Optional[dict]:
@@ -40,9 +41,19 @@ def fetch_comics(comics_id: int) -> Optional[str]:
     return comment
 
 
-def main():
+def get_upload_server(token: str) -> dict:
+    params = {"access_token": token, "v": "5.124"}
+    response = requests.get(f"{VK_API_URL}/photos.getWallUploadServer", params=params)
+    response.raise_for_status()
 
-    print(fetch_comics(353))
+    return response.json()["response"]
+
+
+def main():
+    load_dotenv()
+    token = os.getenv("VK_TOKEN")
+
+    print(get_upload_server(token))
 
 
 if __name__ == "__main__":
