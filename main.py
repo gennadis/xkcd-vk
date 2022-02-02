@@ -21,7 +21,7 @@ def main():
     photo_id, owner_id = vk.save_photo(token, upload_params, group_id)
     post_id = vk.publish_wall_post(token, group_id, title, owner_id, photo_id)
 
-    print(post_id)
+    os.remove(filename)
 
 
 if __name__ == "__main__":
