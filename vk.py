@@ -1,8 +1,4 @@
-import os
-
 import requests
-from dotenv import load_dotenv
-
 
 VK_API_URL = "https://api.vk.com/method"
 VK_API_VERSION = "5.124"
@@ -74,20 +70,3 @@ def publish_wall_post(
 
     post_id = response.json()["response"]["post_id"]
     return post_id
-
-
-def main():
-    load_dotenv()
-    token = os.getenv("VK_TOKEN")
-    group_id = os.getenv("VK_GROUP_ID")
-
-    upload_server_url = get_upload_server(token, group_id)
-    upload_params = upload_photo(token, upload_server_url, "pale_blue_dot.png")
-    photo_id, owner_id = save_photo(token, upload_params, group_id)
-    post_id = publish_wall_post(token, int(group_id), "test11", owner_id, photo_id)
-
-    print(post_id)
-
-
-if __name__ == "__main__":
-    main()

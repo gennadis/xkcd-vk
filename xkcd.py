@@ -1,5 +1,4 @@
 import os
-from random import randint
 from urllib.parse import unquote, urlsplit
 
 import requests
@@ -39,13 +38,3 @@ def get_comics_count() -> int:
     response.raise_for_status()
 
     return response.json()["num"]
-
-
-def main():
-    random_id = randint(1, get_comics_count())
-    metadata = get_comics_metadata(random_id)
-    print(fetch_comics(metadata))
-
-
-if __name__ == "__main__":
-    main()
