@@ -1,4 +1,4 @@
-# Download books from Tululu
+# Post random XKCD comics on VK group wall
 
 This project is a simple command line tool for fetching [XKCD comics](https://xkcd.com/)  
 and posting them to your [VK](https://vk.com/) community wall.
