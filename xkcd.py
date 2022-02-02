@@ -1,6 +1,7 @@
 import os
 from typing import Optional, Union
 from urllib.parse import urljoin, unquote, urlsplit
+from click import command
 
 
 import requests
@@ -24,10 +25,11 @@ def get_filename(url: str) -> str:
     return filename
 
 
-def fetch_comics_image(comics_id: int) -> Optional[str]:
+def fetch_comics(comics_id: int) -> Optional[str]:
     comics_json = get_comics_json(comics_id)
     image_url = comics_json["img"]
     filename = get_filename(image_url)
+    comment = comics_json["alt"]
 
     response = requests.get(image_url)
     response.raise_for_status()
@@ -35,11 +37,12 @@ def fetch_comics_image(comics_id: int) -> Optional[str]:
     with open(filename, "wb") as file:
         file.write(response.content)
 
-    return filename
+    return comment
 
 
 def main():
-    fetch_comics_image(353)
+
+    print(fetch_comics(353))
 
 
 if __name__ == "__main__":
