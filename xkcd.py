@@ -3,6 +3,8 @@ from urllib.parse import unquote, urlsplit
 
 import requests
 
+COMICS_DIR = "/comics"
+
 
 def get_comics_metadata(comics_id: int) -> dict:
     response = requests.get(f"https://xkcd.com/{comics_id}/info.0.json")
@@ -19,18 +21,19 @@ def get_filename(url: str) -> str:
     return filename
 
 
-def fetch_comics(metadata: dict) -> tuple[str, str]:
+def fetch_comics(metadata: dict, folder: str) -> tuple[str, str]:
     image_url = metadata["img"]
     title = metadata["alt"]
     filename = get_filename(metadata["img"])
+    filepath = os.path.join(folder, filename)
 
     response = requests.get(image_url)
     response.raise_for_status()
 
-    with open(filename, "wb") as file:
+    with open(filepath, "wb") as file:
         file.write(response.content)
 
-    return filename, title
+    return filepath, title
 
 
 def get_comics_count() -> int:
