@@ -4,7 +4,7 @@ VK_API_URL = "https://api.vk.com/method"
 VK_API_VERSION = "5.124"
 
 
-def get_upload_server(token: str, group_id: int) -> str:
+def get_upload_url(token: str, group_id: int) -> str:
     url = f"{VK_API_URL}/photos.getWallUploadServer"
     params = {
         "access_token": token,
@@ -15,9 +15,9 @@ def get_upload_server(token: str, group_id: int) -> str:
     response = requests.get(url=url, params=params)
     response.raise_for_status()
 
-    upload_server_url = response.json()["response"]["upload_url"]
+    upload_url = response.json()["response"]["upload_url"]
 
-    return upload_server_url
+    return upload_url
 
 
 def upload_photo(token: str, upload_url: str, filename: str) -> dict:
