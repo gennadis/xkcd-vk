@@ -1,3 +1,4 @@
+from pprint import pprint
 import requests
 
 VK_API_URL = "https://api.vk.com/method"
@@ -45,7 +46,7 @@ def save_photo(token: str, upload_params: dict, group_id: int) -> tuple[int, int
     response = requests.post(url=url, params=params)
     response.raise_for_status()
 
-    [saved_file_metadata] = response.json()["response"]
+    saved_file_metadata = response.json()["response"][0]  # ["resonse"] length == 1
     photo_id = saved_file_metadata["id"]
     owner_id = saved_file_metadata["owner_id"]
 
