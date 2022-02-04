@@ -18,9 +18,10 @@ def get_upload_url(token: str, group_id: int) -> str:
 
     response = requests.get(url=url, params=params)
     response.raise_for_status()
-    raise_for_vk_error(response)
+    response_object = response.json()
+    raise_for_vk_error(response_object)
 
-    upload_url = response.json()["response"]["upload_url"]
+    upload_url = response_object["response"]["upload_url"]
 
     return upload_url
 
@@ -32,9 +33,10 @@ def upload_photo(token: str, upload_url: str, filename: str) -> dict:
 
         response = requests.post(url=upload_url, params=params, files=files)
         response.raise_for_status()
-        raise_for_vk_error(response)
+        response_object = response.json()
+        raise_for_vk_error(response_object)
 
-    return response.json()
+    return response_object
 
 
 def save_photo(token: str, upload_params: dict, group_id: int) -> tuple[int, int]:
@@ -50,9 +52,10 @@ def save_photo(token: str, upload_params: dict, group_id: int) -> tuple[int, int
 
     response = requests.post(url=url, params=params)
     response.raise_for_status()
-    raise_for_vk_error(response)
+    response_object = response.json()
+    raise_for_vk_error(response_object)
 
-    saved_file_metadata = response.json()["response"][0]  # ["resonse"] length == 1
+    saved_file_metadata = response_object["response"][0]  # ["resonse"] length == 1
     photo_id = saved_file_metadata["id"]
     owner_id = saved_file_metadata["owner_id"]
 
@@ -74,14 +77,14 @@ def publish_wall_post(
 
     response = requests.post(url=url, params=params)
     response.raise_for_status()
-    raise_for_vk_error(response)
+    response_object = response.json()
+    raise_for_vk_error(response_object)
 
-    post_id = response.json()["response"]["post_id"]
+    post_id = response_object["response"]["post_id"]
     return post_id
 
 
-def raise_for_vk_error(response: requests.Response):
-    response_to_check = response.json()
+def raise_for_vk_error(response_to_check: dict):
     if "error" in response_to_check:
         raise VKError(
             response_to_check["error"]["error_code"],
