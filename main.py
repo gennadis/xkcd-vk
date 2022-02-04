@@ -25,7 +25,6 @@ def main():
 
     except (HTTPError, vk.VKError) as error:
         print(error)
-        return
 
     finally:
         os.remove(filename)
